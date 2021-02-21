@@ -9,6 +9,21 @@ pop_size = 100; %population size(how many individuals)
 num_of_best_ones = [20, 15, 10, 5]; %how many individuals go to next generation (20x best, 15x second best, ...)
 num_of_cycles = 500;
 
+%toggles
+%selection
+selbest_toggle = 1;
+seltourn_toggle = 0;
+selsus_toggle = 0;
+selrand_toggle = 0;
+%mutation
+mutx_toggle = 1;
+muta_toggle = 0;
+mutn_toggle = 0;
+mutm_toggle = 0;
+%crossing
+crossov_toggle = 1;
+crossov_intmedx = 0;
+crossov_around = 0;
 
 population = genrpop(pop_size,space); %generate population
 
