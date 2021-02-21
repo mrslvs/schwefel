@@ -35,7 +35,7 @@ for i = 1:num_of_cycles
     fit_of_population = get_fit_of_population(pop_size, population); %fitness
     best_individuals(i) = min(fit_of_population); %take best one for graph
     
-    %selection
+    %selection of the best
     switch selection
         case 1
             new_population = selbest(population, fit_of_population, num_of_best_ones);
@@ -45,6 +45,11 @@ for i = 1:num_of_cycles
             new_population = selsus(population, fit_of_population, sum(num_of_best_ones));
         case 4
             new_population = selrand(population, fit_of_population, sum(num_of_best_ones));
+    end 
+    
+    %mutation
+    if mutx_toggle == 1
+        temp_pop = mutx(population, 0.1, space);
     end
     
 end
