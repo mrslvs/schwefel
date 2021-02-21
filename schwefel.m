@@ -11,8 +11,8 @@ num_of_cycles = 500;
 
 %toggles
 %selection
-selbest_toggle = 1;
-seltourn_toggle = 0;
+selbest_toggle = 0;
+seltourn_toggle = 1;
 selsus_toggle = 0;
 selrand_toggle = 0;
 selection = get_selection(selbest_toggle, seltourn_toggle, selsus_toggle, selrand_toggle);
@@ -34,9 +34,21 @@ best_individuals = zeros(1,pop_size);
 for i = 1:num_of_cycles
     fit_of_population = get_fit_of_population(pop_size, population); %fitness
     best_individuals(i) = min(fit_of_population); %take best one for graph
-    new_population = selbest(population, fit_of_population, num_of_best_ones);
+    
+    %selection
+    switch selection
+        case 1
+            new_population = selbest(population, fit_of_population, num_of_best_ones);
+        case 2
+            new_population = seltourn(population, fit_of_population, sum(num_of_best_ones));
+        case 3
+            new_population = selsus(population, fit_of_population, sum(num_of_best_ones));
+        case 4
+            new_population = selrand(population, fit_of_population, sum(num_of_best_ones));
+    end
     
 end
+
 
 function sel = get_selection(best, tourn, sus, rand)
 %returns:
