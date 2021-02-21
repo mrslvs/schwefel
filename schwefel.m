@@ -14,3 +14,12 @@ fit_of_population = zeros(1, pop_size);
 for individ = 1:pop_size
     fit_of_population(individ) = testfn3(population(individ));
 end
+
+function fit = get_fit_of_population(population, pop_size)
+%returns matrix of function values
+    fit = zeros(1,pop_size);
+    
+    for individ = 1:pop_size
+        fit(individ) = testfn3(population(individ));
+    end
+end
