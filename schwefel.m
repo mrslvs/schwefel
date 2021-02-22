@@ -39,19 +39,18 @@ for i = 1:num_of_cycles
     end 
     
     %crossing
-    cross_pop = crossov(population, 1, 0);
+    population = crossov(population, 1, 0);
     
     %mutation
-    mut_pop = mutx(population, 0.5, space);
+    population = mutx(population, 0.5, space);
     
     %add to pop_size
-    diff = (pop_size-(sum(num_of_best_ones))) /2;
+    diff = (pop_size-(sum(num_of_best_ones)));
     
     %take from crossed and mutated
-    temp_pop1 = selrand(cross_pop, fit_of_population, diff);
-    temp_pop2 = selrand(mut_pop, fit_of_population, diff);
+    temp_pop = selrand(population, fit_of_population, diff);
     
-    population = [new_population; temp_pop1; temp_pop2];
+    population = [new_population; temp_pop];
 end
 
 plot(best_individuals);
