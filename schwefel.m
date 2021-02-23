@@ -42,7 +42,7 @@ for i = 1:num_of_cycles
     population = crossov(population, 1, 0);
     
     %mutation
-    population = mutx(population, 0.05, space);
+    population = mutx(population, 0.08, space);
     
     %amp = ones(1,10) * 50;
     %population = muta(population, 0.01, amp, space); 
