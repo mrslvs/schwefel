@@ -44,8 +44,8 @@ for i = 1:num_of_cycles
     %mutation
     population = mutx(population, 0.08, space);
     
-    %amp = ones(1,10) * 50;
-    %population = muta(population, 0.01, amp, space); 
+    amp = ones(1,10) * 50;
+    population = muta(population, 0.01, amp, space); 
     
     %add to pop_size
     diff = (pop_size-(sum(num_of_best_ones)));
