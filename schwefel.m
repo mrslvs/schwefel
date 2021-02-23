@@ -5,26 +5,26 @@
 space_down = ones(1,10) * -500; %lowest value
 space_up = ones(1,10) * 500; %highest value
 space = [space_down; space_up]; %space used for generating population
-pop_size = 100; %population size(how many individuals)
+pop_size = 200; %population size(how many individuals)
 num_of_best_ones = [15, 10, 5]; %how many individuals go to next generation (3x best, 2x second best, ...)
 num_of_cycles = 800;
 
 %toggles selection
-selbest_toggle = 0;
-seltourn_toggle = 1;
+selbest_toggle = 1;
+seltourn_toggle = 0;
 selsus_toggle = 0;
 selrand_toggle = 0;
 selection = get_selection(selbest_toggle, seltourn_toggle, selsus_toggle, selrand_toggle);
 
 population = genrpop(pop_size,space); %generate population
 
-fit_of_population = get_fit_of_population(pop_size, population);
+fit_of_population = testfn3(population);
 best_individuals = zeros(1,pop_size);
 
 hold on
 for i = 1:num_of_cycles
-    fit_of_population = get_fit_of_population(pop_size, population); %fitness
     best_individuals(i) = min(fit_of_population); %take best one for graph
+    fit_of_population = testfn3(population); %fitness
     
     %selection of the best
     switch selection
@@ -42,7 +42,10 @@ for i = 1:num_of_cycles
     population = crossov(population, 1, 0);
     
     %mutation
-    population = mutx(population, 0.5, space);
+    population = mutx(population, 0.05, space);
+    
+    %amp = ones(1,10) * 50;
+    %population = muta(population, 0.01, amp, space); 
     
     %add to pop_size
     diff = (pop_size-(sum(num_of_best_ones)));
@@ -75,12 +78,3 @@ function sel = get_selection(best, tourn, sus, rand)
         sel = 4;
     end
 end 
-
-function fit = get_fit_of_population(pop_size, population)
-%returns matrix of function values
-    fit = zeros(1,pop_size);
-    
-    for individ = 1:pop_size
-        fit(individ) = testfn3(population(individ));
-    end
-end
