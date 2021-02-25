@@ -6,7 +6,7 @@ space_down = ones(1,10) * -500; %lowest value
 space_up = ones(1,10) * 500; %highest value
 space = [space_down; space_up]; %space used for generating population
 pop_size = 200; %population size(how many individuals)
-num_of_best_ones = [15, 10, 5]; %how many individuals go to next generation (3x best, 2x second best, ...)
+vec_of_best_ones = [15, 10, 5]; %how many individuals go to next generation (3x best, 2x second best, ...)
 num_of_cycles = 800;
 
 %toggles selection
@@ -29,13 +29,13 @@ for i = 1:num_of_cycles
     %selection of the best
     switch selection
         case 1
-            new_population = selbest(population, fit_of_population, num_of_best_ones);
+            new_population = selbest(population, fit_of_population, vec_of_best_ones);
         case 2
-            new_population = seltourn(population, fit_of_population, sum(num_of_best_ones));
+            new_population = seltourn(population, fit_of_population, sum(vec_of_best_ones));
         case 3
-            new_population = selsus(population, fit_of_population, sum(num_of_best_ones));
+            new_population = selsus(population, fit_of_population, sum(vec_of_best_ones));
         case 4
-            new_population = selrand(population, fit_of_population, sum(num_of_best_ones));
+            new_population = selrand(population, fit_of_population, sum(vec_of_best_ones));
     end 
     
     %crossing
@@ -48,7 +48,7 @@ for i = 1:num_of_cycles
     population = muta(population, 0.01, amp, space); 
     
     %add to pop_size
-    diff = (pop_size-(sum(num_of_best_ones)));
+    diff = (pop_size-(sum(vec_of_best_ones)));
     
     %take from crossed and mutated
     temp_pop = selrand(population, fit_of_population, diff);
