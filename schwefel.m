@@ -1,15 +1,15 @@
-%uloha1
+%task1
 %isid92654
 %Schwefel
 
 space_down = ones(1,10) * -500; %lowest value
 space_up = ones(1,10) * 500; %highest value
-space = [space_down; space_up]; %space used for generating population
-pop_size = 200; %population size(how many individuals)
-vec_of_best_ones = [15, 10, 5]; %how many individuals go to next generation (3x best, 2x second best, ...)
+space = [space_down; space_up]; %space used to generate population
+pop_size = 200;
+vec_of_best_ones = [15, 10, 5]; %take 15x best, 10x second best, ...
 num_of_cycles = 800;
 
-%toggles selection
+%manual toggles for selection
 selbest_toggle = 1;
 seltourn_toggle = 0;
 selsus_toggle = 0;
@@ -18,7 +18,7 @@ selection = get_selection(selbest_toggle, seltourn_toggle, selsus_toggle, selran
 
 population = genrpop(pop_size,space); %generate population
 
-fit_of_population = testfn3(population);
+fit_of_population = testfn3(population); %calculate fitness function
 best_individuals = zeros(1,pop_size);
 
 hold on
@@ -26,7 +26,7 @@ for i = 1:num_of_cycles
     best_individuals(i) = min(fit_of_population); %take best one for graph
     fit_of_population = testfn3(population); %fitness
     
-    %selection of the best
+    %how to select the best individuals
     switch selection
         case 1
             new_population = selbest(population, fit_of_population, vec_of_best_ones);
@@ -43,14 +43,11 @@ for i = 1:num_of_cycles
     
     %mutation
     population = mutx(population, 0.08, space);
-    
     amp = ones(1,10) * 50;
     population = muta(population, 0.01, amp, space); 
     
-    %add to pop_size
+    %merge best ones with randomly crossed and mutated individuals
     diff = (pop_size-(sum(vec_of_best_ones)));
-    
-    %take from crossed and mutated
     temp_pop = selrand(population, fit_of_population, diff);
     
     population = [new_population; temp_pop];
